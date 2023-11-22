@@ -12,18 +12,21 @@ class HomeAssembly {
     class func configuredModule() -> UIViewController {
         
         let view = HomeViewController()
-        
+
         let presenter = HomePresenter()
+        let dataManager = DataManager()
         let interactor = HomeInteractor()
-        let rounter = HomeRouter()
+        let router = HomeRouter()
         
         view.output = presenter
         
         presenter.view = view
         presenter.interactor = interactor
-        presenter.rounter = rounter
+        presenter.router = router
         
+        interactor.configured()
         interactor.output = presenter
+        interactor.dataManager = dataManager
         
         return view
         

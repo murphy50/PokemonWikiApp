@@ -8,5 +8,8 @@
 import Foundation
 
 protocol HomeInteractorInput: AnyObject {
-    
+    func obtainPokemonList() async throws 
+    func loadMorePokemon()
+    var dataManager: DataManagerInput! { get }
+    var output: HomeInteractorOutput! { get }
 }

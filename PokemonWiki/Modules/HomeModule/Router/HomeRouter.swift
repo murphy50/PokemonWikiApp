@@ -8,5 +8,6 @@
 import Foundation
 
 class HomeRouter: HomeRouterInput {
+    var presenter: HomeRouterOutput!
     
 }

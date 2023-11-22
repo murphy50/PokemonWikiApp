@@ -9,31 +9,60 @@ import UIKit
 
 class HomeViewController: UIViewController, HomeViewInput {
     
+    
+    func showPokemon()  {
+        self.pokemonTableView.reloadData()
+        print("view count \(output.pokemonArray.count)")
+        print(2)
+        removeActivityIndicator()
+    }
+    
+    var presenter: HomeRouterOutput!
+    
     var output: HomeViewOutput!
     
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = .white
-        pokemonTable.delegate = self
-        pokemonTable.dataSource = self
-        pokemonTable.register(UITableViewCell.self, forCellReuseIdentifier: "pokemonTableCell")
+        pokemonTableView.delegate = self
+        pokemonTableView.dataSource = self
+        pokemonTableView.register(UITableViewCell.self, forCellReuseIdentifier: "pokemonTableCell")
         configureLayout()
     }
     
-    private var pokemons = ["1", "2", "3", "4"]
     
-    private lazy var pokemonTable: UITableView = {
+    private lazy var pokemonTableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
         table.backgroundColor = .yellow
     
         return table
     }()
+    
+   
+    lazy var pagingSpinner = {
+        let pagingSpinner = UIActivityIndicatorView(style: .medium)
+        pagingSpinner.startAnimating()
+        pagingSpinner.color = .red//UIColor(red: 22.0/255.0, green: 106.0/255.0, blue: 176.0/255.0, alpha: 1.0)
+        pagingSpinner.hidesWhenStopped = false
+        return pagingSpinner
+    }()
+    
+    func showActivityIndicator() {
+      
+        pokemonTableView.tableFooterView = pagingSpinner
+
+    }
+    func removeActivityIndicator() {
+        //pagingSpinner.stopAnimating()
+        //indicatorView.stopAnimating()
+    }
 }
 
 private extension HomeViewController {
     func configureLayout() {
-        [pokemonTable].forEach {
+        [pokemonTableView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -41,10 +70,10 @@ private extension HomeViewController {
     }
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            pokemonTable.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pokemonTable.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            pokemonTable.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor),
-            pokemonTable.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
+            pokemonTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pokemonTableView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            pokemonTableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor),
+            pokemonTableView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
         ])
     }
 }
@@ -55,12 +84,17 @@ extension HomeViewController: UITableViewDelegate {
 
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        pokemons.count
+        output.pokemonArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == output.pokemonArray.count - 1 {
+            output.loadMorePokemon()
+            showActivityIndicator()
+            print(1)
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonTableCell", for: indexPath as IndexPath)
-        cell.textLabel?.text = pokemons[indexPath.row]
+        cell.textLabel?.text = output.pokemonArray[indexPath.row].name
         return cell
     }
 }
