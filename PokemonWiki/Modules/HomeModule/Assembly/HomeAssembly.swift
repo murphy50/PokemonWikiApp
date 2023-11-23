@@ -17,7 +17,7 @@ class HomeAssembly {
         let dataManager = DataManager()
         let interactor = HomeInteractor()
         let router = HomeRouter()
-        
+        router.view = view
         view.output = presenter
         
         presenter.view = view

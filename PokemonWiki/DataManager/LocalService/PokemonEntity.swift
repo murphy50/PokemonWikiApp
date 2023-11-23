@@ -11,7 +11,7 @@ import CoreData
 class PokemonEntity: NSManagedObject {
     static func findOrCreate(_ pokemon: Pokemon, context: NSManagedObjectContext) throws -> PokemonEntity {
         
-        let request: NSFetchRequest<PokemonEntity> = PokemonEntity.fetchRequest()
+        let request = PokemonEntity.fetchRequest()
         if pokemon.name == "bulbasaur" {
             
         }

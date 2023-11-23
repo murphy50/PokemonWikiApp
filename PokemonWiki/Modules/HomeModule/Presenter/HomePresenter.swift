@@ -7,7 +7,11 @@
 
 import Foundation
 
-class HomePresenter: HomeViewOutput, HomeInteractorOutput, HomeRouterOutput {
+class HomePresenter: HomeViewOutput, HomeInteractorOutput {
+    func didPressedCell(with index: Int) {
+        router.showDetailScree(with: pokemonArray[index])
+    }
+    
     
     
     

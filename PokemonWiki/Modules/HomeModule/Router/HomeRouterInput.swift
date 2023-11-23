@@ -8,5 +8,5 @@
 import Foundation
 
 protocol HomeRouterInput: AnyObject {
-    var presenter: HomeRouterOutput! { get }
+    func showDetailScree(with pokemon: Pokemon)
 }

@@ -17,7 +17,7 @@ class HomeViewController: UIViewController, HomeViewInput {
         removeActivityIndicator()
     }
     
-    var presenter: HomeRouterOutput!
+    var presenter: HomeViewOutput!
     
     var output: HomeViewOutput!
     
@@ -79,7 +79,9 @@ private extension HomeViewController {
 }
 
 extension HomeViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        output.didPressedCell(with: indexPath.row)
+    }
 }
 
 extension HomeViewController: UITableViewDataSource {
@@ -97,4 +99,5 @@ extension HomeViewController: UITableViewDataSource {
         cell.textLabel?.text = output.pokemonArray[indexPath.row].name
         return cell
     }
+  
 }
