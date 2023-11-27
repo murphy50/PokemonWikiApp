@@ -9,5 +9,5 @@ import Foundation
 
 protocol HomeViewInput: AnyObject {
     func showPokemon()
-    var presenter: HomeViewOutput! { get }
+    var output: HomeViewOutput! { get set }
 }

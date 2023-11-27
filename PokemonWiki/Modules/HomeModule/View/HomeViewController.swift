@@ -9,7 +9,6 @@ import UIKit
 
 class HomeViewController: UIViewController, HomeViewInput {
     
-    var presenter: HomeViewOutput!
     var output: HomeViewOutput!
     
     func showPokemon()  {

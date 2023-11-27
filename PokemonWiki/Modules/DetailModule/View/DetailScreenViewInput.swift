@@ -8,4 +8,5 @@
 
 protocol DetailScreenViewInput: AnyObject {
     func showEntity()
+    var output: DetailScreenViewOutput! { get set }
 }
