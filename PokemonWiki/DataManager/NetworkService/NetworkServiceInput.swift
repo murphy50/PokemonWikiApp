@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NetworkServiceInput {
-    func networkDataFetcher() async throws -> [Result]
-    func pokemonDataFetcher(with url: String) async throws -> PokemonNetwork
+    func fetchPokemonURL() async throws -> [PokemonURLModel]
+    func fetchPokemonData(with url: String) async throws -> PokemonNetworkModel
     func downloadImageData(from url: String) async throws -> Data 
 }

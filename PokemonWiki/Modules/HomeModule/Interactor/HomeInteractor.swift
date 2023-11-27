@@ -24,6 +24,6 @@ class HomeInteractor: HomeInteractorInput {
     @MainActor
     func obtainPokemonList() async throws {
         let pokemonArray = try await dataManager.obtainPokemonList()
-        output?.didFinishObtainingPokemon(pokemonArray)
+        output.didFinishObtainingPokemon(pokemonArray, from: dataManager.source)
     }
 }

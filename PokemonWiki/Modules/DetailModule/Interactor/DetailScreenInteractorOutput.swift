@@ -9,5 +9,5 @@
 import Foundation
 
 protocol DetailScreenInteractorOutput: AnyObject {
-
+    func didFinishConvertingEntity(_ entity: DetailScreenEntity)
 }

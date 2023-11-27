@@ -14,18 +14,13 @@ private enum NetworkServiceError: Error {
 }
 
 class NetworkService: NetworkServiceInput {
-   
     
+    private let session = URLSession.shared
+    private var urlPath = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=10"
     
-    private var session = URLSession.shared
-    private var offset = 0
-    private var limit = 20
-    private lazy var urlPath = "https://pokeapi.co/api/v2/pokemon?offset=\(offset)&limit=\(limit)"
-    
-    
-    func networkDataFetcher() async throws -> [Result] {
+    func fetchPokemonURL() async throws -> [PokemonURLModel] {
         guard let url = URL(string: urlPath) else { throw NetworkServiceError.InvalidURL }
-
+        
         let (data, response) = try await session.data(from: url)
         
         guard let response = response as? HTTPURLResponse else {
@@ -35,14 +30,14 @@ class NetworkService: NetworkServiceInput {
             throw NetworkServiceError.InvalidHTTPStatusCode(statusCode: response.statusCode)
         }
         let decoder = JSONDecoder()
-        let res = try decoder.decode(NetworkModel.self, from: data)
+        let res = try decoder.decode(GeneralNetworkModel.self, from: data)
         if let next = res.next {
             urlPath = next
         }
-        return res.results
+        return res.pokeomonURLS
     }
     
-    func pokemonDataFetcher(with url: String) async throws -> PokemonNetwork  {
+    func fetchPokemonData(with url: String) async throws -> PokemonNetworkModel  {
         guard let url = URL(string: url) else { throw NetworkServiceError.InvalidURL }
         
         let (data, response) = try await session.data(from: url)
@@ -54,9 +49,8 @@ class NetworkService: NetworkServiceInput {
             throw NetworkServiceError.InvalidHTTPStatusCode(statusCode: response.statusCode)
         }
         let decoder = JSONDecoder()
-        let rawPokemon = try decoder.decode(PokemonNetwork.self, from: data)
+        let rawPokemon = try decoder.decode(PokemonNetworkModel.self, from: data)
         return rawPokemon
-        
     }
     
     func downloadImageData(from url: String) async throws -> Data {
@@ -71,5 +65,5 @@ class NetworkService: NetworkServiceInput {
         }
         return data
     }
- 
+    
 }

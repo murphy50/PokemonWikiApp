@@ -12,7 +12,12 @@ class DetailScreenPresenter: DetailScreenViewOutput, DetailScreenInteractorOutpu
     var interactor: DetailScreenInteractorInput!
     var router: DetailScreenRouterInput!
 
-    func viewIsReady() {
-
+    var entity: DetailScreenEntity?
+    
+    
+    func didFinishConvertingEntity(_ entity: DetailScreenEntity) {
+        self.entity = entity
+        view.showEntity()
     }
+    
 }

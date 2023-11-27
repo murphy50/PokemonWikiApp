@@ -8,6 +8,6 @@
 import Foundation
 
 protocol HomeInteractorOutput: AnyObject {
-    func didFinishObtainingPokemon(_ pokemon: [Pokemon])
+    func didFinishObtainingPokemon(_ pokemon: [Pokemon], from source: FetchingSource)
     var interactor: HomeInteractorInput! { get }
 }

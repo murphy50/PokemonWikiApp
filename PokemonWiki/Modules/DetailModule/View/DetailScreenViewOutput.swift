@@ -7,11 +7,5 @@
 //
 
 protocol DetailScreenViewOutput: AnyObject {
-
-    /**
-        @author murphy50
-        Notify presenter that view is ready
-    */
-
-    //func viewIsReady()
+    var entity: DetailScreenEntity? { get }
 }

@@ -8,9 +8,9 @@
 import Foundation
 
 protocol HomeViewOutput: AnyObject {
-    func showPokemonDetail(for pokemon: Pokemon)
     func didPressedCell(with index: Int)
     func loadMorePokemon()
     var view: HomeViewInput! { get }
     var pokemonArray: [Pokemon] { get }
+    var source: FetchingSource { get }
 }

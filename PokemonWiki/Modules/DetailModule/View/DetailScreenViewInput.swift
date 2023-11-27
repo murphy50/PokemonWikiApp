@@ -7,11 +7,5 @@
 //
 
 protocol DetailScreenViewInput: AnyObject {
-
-    /**
-        @author murphy50
-        Setup initial state of the view
-    */
-
-    //func setupInitialState()
+    func showEntity()
 }

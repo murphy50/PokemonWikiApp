@@ -14,7 +14,9 @@ class HomeViewController: UIViewController, HomeViewInput {
         self.pokemonTableView.reloadData()
         print("view count \(output.pokemonArray.count)")
         print(2)
-        removeActivityIndicator()
+        if output.source == .localeStorage(isAlreadyFetched: true) {
+            removeActivityIndicator()
+        }
     }
     
     var presenter: HomeViewOutput!
@@ -36,7 +38,9 @@ class HomeViewController: UIViewController, HomeViewInput {
     private lazy var pokemonTableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
         table.backgroundColor = .yellow
-    
+        let imageView = UIImageView(image: UIImage(resource: .pokemonLogo))
+        imageView.contentMode = .scaleAspectFit
+        table.tableHeaderView = imageView
         return table
     }()
     
@@ -55,6 +59,9 @@ class HomeViewController: UIViewController, HomeViewInput {
 
     }
     func removeActivityIndicator() {
+        
+        pokemonTableView.tableFooterView = nil
+
         //pagingSpinner.stopAnimating()
         //indicatorView.stopAnimating()
     }
@@ -92,11 +99,15 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == output.pokemonArray.count - 1 {
             output.loadMorePokemon()
-            showActivityIndicator()
+            if output.source  == .network {
+                showActivityIndicator()
+            }
             print(1)
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonTableCell", for: indexPath as IndexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonTableCell", for: indexPath)
         cell.textLabel?.text = output.pokemonArray[indexPath.row].name
+        cell.textLabel?.font = .boldSystemFont(ofSize: 20)
+        cell.imageView?.image = UIImage(resource: .pokeball)
         return cell
     }
   
