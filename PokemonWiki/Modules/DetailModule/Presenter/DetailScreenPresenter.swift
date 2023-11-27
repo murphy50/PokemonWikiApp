@@ -11,13 +11,10 @@ class DetailScreenPresenter: DetailScreenViewOutput, DetailScreenInteractorOutpu
     weak var view: DetailScreenViewInput!
     var interactor: DetailScreenInteractorInput!
     var router: DetailScreenRouterInput!
-
     var entity: DetailScreenEntity?
-    
     
     func didFinishConvertingEntity(_ entity: DetailScreenEntity) {
         self.entity = entity
         view.showEntity()
     }
-    
 }

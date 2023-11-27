@@ -9,61 +9,48 @@ import UIKit
 
 class HomeViewController: UIViewController, HomeViewInput {
     
+    var presenter: HomeViewOutput!
+    var output: HomeViewOutput!
     
     func showPokemon()  {
         self.pokemonTableView.reloadData()
-        print("view count \(output.pokemonArray.count)")
-        print(2)
         if output.source == .localeStorage(isAlreadyFetched: true) {
             removeActivityIndicator()
         }
     }
     
-    var presenter: HomeViewOutput!
-    
-    var output: HomeViewOutput!
-    
-  
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .white
         pokemonTableView.delegate = self
         pokemonTableView.dataSource = self
-        pokemonTableView.register(UITableViewCell.self, forCellReuseIdentifier: "pokemonTableCell")
         configureLayout()
     }
-    
     
     private lazy var pokemonTableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
         table.backgroundColor = .yellow
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "pokemonTableCell")
         let imageView = UIImageView(image: UIImage(resource: .pokemonLogo))
         imageView.contentMode = .scaleAspectFit
         table.tableHeaderView = imageView
         return table
     }()
     
-   
-    lazy var pagingSpinner = {
+    private lazy var pagingSpinner = {
         let pagingSpinner = UIActivityIndicatorView(style: .medium)
         pagingSpinner.startAnimating()
-        pagingSpinner.color = .red//UIColor(red: 22.0/255.0, green: 106.0/255.0, blue: 176.0/255.0, alpha: 1.0)
+        pagingSpinner.color = .red
         pagingSpinner.hidesWhenStopped = false
         return pagingSpinner
     }()
     
-    func showActivityIndicator() {
-      
+    private func showActivityIndicator() {
         pokemonTableView.tableFooterView = pagingSpinner
-
     }
-    func removeActivityIndicator() {
-        
+    
+    private func removeActivityIndicator() {
         pokemonTableView.tableFooterView = nil
-
-        //pagingSpinner.stopAnimating()
-        //indicatorView.stopAnimating()
     }
 }
 
@@ -110,5 +97,4 @@ extension HomeViewController: UITableViewDataSource {
         cell.imageView?.image = UIImage(resource: .pokeball)
         return cell
     }
-  
 }

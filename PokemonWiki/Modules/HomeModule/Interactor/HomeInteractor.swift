@@ -10,8 +10,7 @@ import Foundation
 class HomeInteractor: HomeInteractorInput {
     
     weak var output: HomeInteractorOutput!
-    
-    var dataManager: DataManagerInput!
+    var dataManager: DataManager!
     
     func configured() {
         loadMorePokemon()

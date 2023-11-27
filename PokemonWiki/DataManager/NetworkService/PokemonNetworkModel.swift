@@ -16,7 +16,6 @@ struct PokemonNetworkModel: Codable {
     let height: Int
 }
 
-
 class Sprites: Codable {
     let other: Other
 }
@@ -34,10 +33,12 @@ struct OfficialArtwork: Codable {
         case frontDefault = "front_default"
     }
 }
+
 struct TypeElement: Codable {
     let slot: Int
     let type: Species
 }
+
 struct Species: Codable {
     let name: String
     let url: String

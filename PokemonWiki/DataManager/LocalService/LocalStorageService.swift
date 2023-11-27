@@ -11,7 +11,7 @@ import CoreData
 class LocalStorageService {
     static let shared = LocalStorageService()
     
-    lazy var context: NSManagedObjectContext = {
+    private lazy var context: NSManagedObjectContext = {
         return persistentContainer.viewContext
     }()
     
@@ -29,7 +29,7 @@ class LocalStorageService {
         if context.hasChanges {
             do {
                 try context.save()
-                print("savedddddd")
+                print("data saved successfully")
             } catch {
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
@@ -39,7 +39,6 @@ class LocalStorageService {
    
     func isExist(pokemon: Pokemon) throws -> Bool {
         let request = PokemonEntity.fetchRequest()
-        
         request.predicate = NSPredicate(format: "id == %ld", pokemon.id)
         do {
             let fetchResult = try context.fetch(request)
@@ -55,9 +54,6 @@ class LocalStorageService {
     
     func findOrCreate(pokemon: Pokemon, image: Data?) throws -> PokemonEntity {
         let request = PokemonEntity.fetchRequest()
-        if pokemon.id == 0 {
-            print("ID==========================0")
-        }
         request.predicate = NSPredicate(format: "id == %ld", pokemon.id)
         do {
             let fetchResult = try context.fetch(request)

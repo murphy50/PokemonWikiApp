@@ -7,10 +7,10 @@
 //
 
 class DetailScreenInteractor: DetailScreenInteractorInput {
-
+    
     weak var output: DetailScreenInteractorOutput!
-    var dataManager: DataManagerInput!
-
+    var dataManager: DataManager!
+    
     func configured(with pokemon: Pokemon) {
         Task {
             try await converting(pokemon: pokemon)
@@ -21,11 +21,11 @@ class DetailScreenInteractor: DetailScreenInteractorInput {
     func converting(pokemon: Pokemon) async throws  {
         let image = try await dataManager.obtainPokemonImageData(pokemon)
         let entity = DetailScreenEntity(
-                        name: pokemon.name,
-                        image: image,
-                        types: pokemon.types,
-                        weight: pokemon.weight,
-                        height: pokemon.height
+            name: pokemon.name,
+            image: image,
+            types: pokemon.types,
+            weight: pokemon.weight,
+            height: pokemon.height
         )
         output.didFinishConvertingEntity(entity)
     }

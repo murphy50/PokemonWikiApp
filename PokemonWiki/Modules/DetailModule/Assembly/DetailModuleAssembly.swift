@@ -16,7 +16,7 @@ class DetailModuleAssembly {
         let view = DetailScreenViewController()
         let presenter = DetailScreenPresenter()
         let interactor = DetailScreenInteractor()
-        let dataManager = DataManager()
+        let dataManager = DataManagerImpl()
         
         interactor.dataManager = dataManager
         interactor.output = presenter
